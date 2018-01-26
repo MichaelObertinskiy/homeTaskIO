@@ -3,51 +3,19 @@ import java.io.*;
 public class main {
     public static void main(String[] args) {
 
-        int symbol = 0;
-        Integer x = symbol;
-        symbol = newFileRead();
-        fileWrite("\nline: " + x.toString(symbol));
+        try (FileInputStream firstFile = new FileInputStream("D:\\A-Level\\Home_Task_4_IO\\DirFiles\\firstFile.txt");
+             FileOutputStream secondFile = new FileOutputStream("D:\\A-Level\\Home_Task_4_IO\\DirFiles\\secondFile.txt")) {
+            byte[] buffer = new byte[firstFile.available()];
 
-    }
+            firstFile.read(buffer, 0, buffer.length);
 
-    public static int newFileRead() {
-        int lineNumber = 0;
-        FileReader file;
-        BufferedReader bf;
-        try {
-            file = new FileReader("D:/A-Level/Home_Task_4_IO/src/file.txt");
-            bf = new BufferedReader(file);
-            try {
-                while (bf.readLine() != null) {
-                    lineNumber++;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            secondFile.write(buffer, 0, buffer.length);
+        } catch (IOException ex) {
+
+            System.out.println(ex.getMessage());
         }
-
-        return lineNumber;
     }
 
-
-    public static void fileWrite(String str) {
-        FileWriter flWr = null;
-        try {
-            flWr = new FileWriter("D:/A-Level/Home_Task_4_IO/src/file.txt", true);
-            flWr.write(str);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                flWr.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
 }
 
 
